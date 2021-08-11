@@ -3,7 +3,7 @@ package br.com.gsoft.mvtube.video.controller.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import br.com.gsoft.mvtube.model.video.Video;
+import br.com.gsoft.mvtube.video.model.Video;
 
 public class VideoDto {
 

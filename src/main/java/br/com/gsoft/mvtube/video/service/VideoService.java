@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.gsoft.mvtube.model.video.Video;
 import br.com.gsoft.mvtube.repository.VideoRepository;
 import br.com.gsoft.mvtube.video.controller.dto.VideoDto;
 import br.com.gsoft.mvtube.video.controller.form.VideoForm;
+import br.com.gsoft.mvtube.video.model.Video;
 
 @Service
 public class VideoService {

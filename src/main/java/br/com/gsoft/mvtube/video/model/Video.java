@@ -1,10 +1,13 @@
-package br.com.gsoft.mvtube.model.video;
+package br.com.gsoft.mvtube.video.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+
+import br.com.gsoft.mvtube.category.model.Category;
 
 @Entity
 public class Video {
@@ -20,6 +23,9 @@ public class Video {
 
 	@NotNull
 	private String url;
+	
+	@ManyToOne
+	private Category category;
 
 	public Video() {
 		super();

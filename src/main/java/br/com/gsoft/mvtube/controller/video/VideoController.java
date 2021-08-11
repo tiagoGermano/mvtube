@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.gsoft.mvtube.model.video.Video;
 import br.com.gsoft.mvtube.repository.VideoRepository;
 import br.com.gsoft.mvtube.video.controller.dto.VideoDto;
 import br.com.gsoft.mvtube.video.controller.form.VideoForm;
+import br.com.gsoft.mvtube.video.model.Video;
 import br.com.gsoft.mvtube.video.service.VideoService;
 
 @RestController

@@ -1,9 +1,9 @@
-package br.com.gsoft.mvtube.category.controller.dto;
+package br.com.gsoft.mvtube.controller.category.dto;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import br.com.gsoft.mvtube.category.model.Category;
+import br.com.gsoft.mvtube.model.category.Category;
 
 public class CategoryDto {
 

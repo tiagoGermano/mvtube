@@ -1,4 +1,4 @@
-package br.com.gsoft.mvtube.video.model;
+package br.com.gsoft.mvtube.model.video;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import br.com.gsoft.mvtube.category.model.Category;
+import br.com.gsoft.mvtube.model.category.Category;
 
 @Entity
 public class Video {

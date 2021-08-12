@@ -4,7 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import br.com.gsoft.mvtube.video.model.Video;
+import br.com.gsoft.mvtube.model.video.Video;
 
 public class VideoForm {
 

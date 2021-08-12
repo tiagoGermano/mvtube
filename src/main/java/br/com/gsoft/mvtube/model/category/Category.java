@@ -1,4 +1,4 @@
-package br.com.gsoft.mvtube.category.model;
+package br.com.gsoft.mvtube.model.category;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

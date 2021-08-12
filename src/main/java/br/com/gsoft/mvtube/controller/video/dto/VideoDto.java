@@ -1,9 +1,9 @@
-package br.com.gsoft.mvtube.video.controller.dto;
+package br.com.gsoft.mvtube.controller.video.dto;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import br.com.gsoft.mvtube.video.model.Video;
+import br.com.gsoft.mvtube.model.video.Video;
 
 public class VideoDto {
 

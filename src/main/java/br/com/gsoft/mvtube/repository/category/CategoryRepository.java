@@ -1,8 +1,8 @@
-package br.com.gsoft.mvtube.category.repository;
+package br.com.gsoft.mvtube.repository.category;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.gsoft.mvtube.category.model.Category;
+import br.com.gsoft.mvtube.model.category.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Long>{
 

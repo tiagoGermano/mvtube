@@ -1,4 +1,4 @@
-package br.com.gsoft.mvtube.video.controller.form;
+package br.com.gsoft.mvtube.controller.video.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -6,15 +6,21 @@ import javax.validation.constraints.Size;
 
 import br.com.gsoft.mvtube.model.video.Video;
 
-public class VideoForm {
+public class CreateOrUpdateVideoDto {
 
-	@NotNull @NotEmpty @Size(min=10, max=40)
+	@NotNull
+	@NotEmpty
+	@Size(min = 10, max = 40)
 	private String title;
 
 	private String description;
 
-	@NotNull @NotEmpty @Size(min=5)
+	@NotNull
+	@NotEmpty
+	@Size(min = 5, max = 100)
 	private String url;
+
+	private Long categoryId;
 
 	public String getTitle() {
 		return title;
@@ -39,7 +45,15 @@ public class VideoForm {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
 	public Video converter() {
 		return new Video(this.title, this.description, this.url);
 	}

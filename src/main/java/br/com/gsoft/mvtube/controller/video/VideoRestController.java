@@ -18,11 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.gsoft.mvtube.controller.video.dto.CreateOrUpdateVideoDto;
 import br.com.gsoft.mvtube.controller.video.dto.VideoDto;
+import br.com.gsoft.mvtube.exceptions.BusinessLogicException;
 import br.com.gsoft.mvtube.model.video.Video;
 import br.com.gsoft.mvtube.repository.VideoRepository;
 import br.com.gsoft.mvtube.service.video.VideoService;
-import br.com.gsoft.mvtube.video.controller.form.VideoForm;
 
 @RestController
 @RequestMapping("videos")
@@ -41,11 +42,15 @@ public class VideoRestController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<VideoDto> save(@RequestBody @Valid VideoForm videoForm, UriComponentsBuilder uriBuilder) {
-		Video video = videoForm.converter();
-		repository.save(video);
-		URI location = uriBuilder.path("/videos/{id}").buildAndExpand(video.getId()).toUri();
-		return ResponseEntity.created(location).body(new VideoDto(video));		
+	public ResponseEntity<VideoDto> save(@RequestBody @Valid CreateOrUpdateVideoDto videoDto, UriComponentsBuilder uriBuilder) throws BusinessLogicException {
+		
+		try {
+			Video video = service.create(videoDto);
+			URI location = uriBuilder.path("/videos/{id}").buildAndExpand(video.getId()).toUri();
+			return ResponseEntity.created(location).body(new VideoDto(video));
+		} catch (BusinessLogicException e) {
+			throw new BusinessLogicException(e.getMessage());
+		}
 	}
 	
 	@GetMapping("/{id}")
@@ -61,7 +66,7 @@ public class VideoRestController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<VideoDto> update(@PathVariable Long id, @RequestBody @Valid VideoForm videoForm) {
+	public ResponseEntity<VideoDto> update(@PathVariable Long id, @RequestBody @Valid CreateOrUpdateVideoDto videoForm) {
 		VideoDto videoUpdated = service.update(id, videoForm);
 		
 		if(videoUpdated != null) {

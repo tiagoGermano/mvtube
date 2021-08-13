@@ -11,6 +11,7 @@ public class VideoDto {
 	private final String title;
 	private final String description;
 	private final String url;
+	private final Long categoryId;
 
 	public VideoDto(Video video) {
 		super();
@@ -18,6 +19,7 @@ public class VideoDto {
 		this.title = video.getTitle();
 		this.description = video.getDescription();
 		this.url = video.getUrl();
+		this.categoryId = video.getCategory() == null ?  null : video.getCategory().getId();
 	}
 
 	public Long getId() {
@@ -34,6 +36,10 @@ public class VideoDto {
 
 	public String getUrl() {
 		return url;
+	}
+	
+	public Long getCategoryId() {
+		return categoryId;
 	}
 	
 	public static List<VideoDto> converter(List<Video> videos) {

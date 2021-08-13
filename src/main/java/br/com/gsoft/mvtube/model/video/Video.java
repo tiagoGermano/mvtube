@@ -69,5 +69,13 @@ public class Video {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	
+	public Category getCategory() {
+		return category;
+	}
+	
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
 }

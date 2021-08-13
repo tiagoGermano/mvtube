@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 
 import br.com.gsoft.mvtube.model.category.Category;
 
-public class NewCategoryDto {
+public class CreateUpdateCategoryDto {
 
 	@NotNull
 	@NotEmpty

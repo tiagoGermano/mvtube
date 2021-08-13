@@ -27,23 +27,33 @@ public class CategoryService {
 		return repository.save(category);
 	}
 	
-	public Optional<Category> findOne(Long id) {
-		return repository.findById(id);
+	public Category findOne(Long id) throws ModelNotFoundException {
+		Category category = findCategory(id);
+		return category;
 	}
 	
 	@Transactional
 	public Category update(Long id, CreateUpdateCategoryDto categoryDto) throws ModelNotFoundException {
-		Optional<Category> optional = repository.findById(id);
-		
-		if(!optional.isPresent()) {
-			throw new ModelNotFoundException("Category with id "+id +" not found");
-		}
-		
-		Category category = optional.get();
+		Category category = findCategory(id);
 		category.setTitle(categoryDto.getTitle());
 		category.setColor(categoryDto.getColor());
 		
 		return category;
+	}
+	
+	public void delete(Long id) throws ModelNotFoundException {
+		Category category = findCategory(id);
+		repository.delete(category);
+	}
+	
+	private Category findCategory(Long id) throws ModelNotFoundException {
+		Optional<Category> optional = repository.findById(id);
+		
+		if(optional.isPresent()) {
+			return optional.get();
+		}
+		
+		throw new ModelNotFoundException("Category with id "+id +" not found");
 	}
 	
 	

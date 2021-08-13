@@ -2,13 +2,12 @@ package br.com.gsoft.mvtube.controller.category;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,14 +46,23 @@ public class CategoryRestController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<CategoryDto> findOne(@PathVariable Long id) {
-		Optional<Category> optional = service.findOne(id);
-		
-		if(optional.isPresent()) {
-			Category category = optional.get();
+		try {
+			Category category = service.findOne(id);
 			return ResponseEntity.ok(new CategoryDto(category));			
+		} catch (ModelNotFoundException e) {
+			return ResponseEntity.notFound().build();
 		}
-		
-		return ResponseEntity.notFound().build();
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<CategoryDto> delete(@PathVariable Long id) {
+		try {
+			service.delete(id);
+			return ResponseEntity.ok().build();
+			
+		} catch (ModelNotFoundException e) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 	
 	@PutMapping("/{id}")

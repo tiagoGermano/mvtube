@@ -1,10 +1,16 @@
 package br.com.gsoft.mvtube.model.category;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+
+import br.com.gsoft.mvtube.model.video.Video;
 
 @Entity
 public class Category {
@@ -17,6 +23,9 @@ public class Category {
 	
 	@NotNull
 	private String color;
+	
+	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+	private List<Video> videos;
 
 	public Long getId() {
 		return id;
@@ -42,6 +51,12 @@ public class Category {
 		this.color = color;
 	}
 	
+	public List<Video> getVideos() {
+		return videos;
+	}
 	
+	public void setVideos(List<Video> videos) {
+		this.videos = videos;
+	}
 	
 }

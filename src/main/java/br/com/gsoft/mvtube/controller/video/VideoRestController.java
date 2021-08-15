@@ -21,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.gsoft.mvtube.controller.video.dto.CreateOrUpdateVideoDto;
 import br.com.gsoft.mvtube.controller.video.dto.VideoDto;
 import br.com.gsoft.mvtube.exceptions.BusinessLogicException;
+import br.com.gsoft.mvtube.exceptions.ModelNotFoundException;
 import br.com.gsoft.mvtube.model.video.Video;
 import br.com.gsoft.mvtube.repository.VideoRepository;
 import br.com.gsoft.mvtube.service.video.VideoService;
@@ -66,14 +67,15 @@ public class VideoRestController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<VideoDto> update(@PathVariable Long id, @RequestBody @Valid CreateOrUpdateVideoDto videoForm) {
-		VideoDto videoUpdated = service.update(id, videoForm);
+	public ResponseEntity<VideoDto> update(@PathVariable Long id, @RequestBody @Valid CreateOrUpdateVideoDto videoForm) throws BusinessLogicException {
 		
-		if(videoUpdated != null) {
-			return ResponseEntity.ok(videoUpdated);			
-		}
-		
-		return ResponseEntity.notFound().build();			
+		try {
+			VideoDto videoUpdated = service.update(id, videoForm);
+			return ResponseEntity.ok(videoUpdated);
+			
+		} catch (ModelNotFoundException e) {
+			return ResponseEntity.notFound().build();
+		}		
 	}
 	
 	@DeleteMapping("/{id}")

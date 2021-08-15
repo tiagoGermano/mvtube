@@ -19,9 +19,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.gsoft.mvtube.controller.category.dto.CategoryDto;
 import br.com.gsoft.mvtube.controller.category.dto.CreateUpdateCategoryDto;
+import br.com.gsoft.mvtube.controller.video.dto.VideoDto;
+import br.com.gsoft.mvtube.exceptions.BusinessLogicException;
 import br.com.gsoft.mvtube.exceptions.ModelNotFoundException;
 import br.com.gsoft.mvtube.model.category.Category;
+import br.com.gsoft.mvtube.model.video.Video;
 import br.com.gsoft.mvtube.service.category.CategoryService;
+import br.com.gsoft.mvtube.service.video.VideoService;
 
 @RestController
 @RequestMapping("/categorias")
@@ -29,6 +33,9 @@ public class CategoryRestController {
 	
 	@Autowired
 	private CategoryService service;
+	
+	@Autowired
+	private VideoService videoService;
 	
 	@GetMapping
 	public ResponseEntity<List<CategoryDto>> findAll() {
@@ -74,7 +81,12 @@ public class CategoryRestController {
 		} catch (ModelNotFoundException e) {
 			return ResponseEntity.notFound().build();
 		}
-
+	}
+	
+	@GetMapping("/{id}/videos")
+	public ResponseEntity<List<VideoDto>> findVideosByCategory(@PathVariable(name = "id") Long categoryId) throws BusinessLogicException {
+		List<Video> videos = videoService.findByCategoryId(categoryId);
+		return ResponseEntity.ok(VideoDto.converter(videos));
 	}
 
 }

@@ -1,5 +1,6 @@
 package br.com.gsoft.mvtube.service.video;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,16 @@ public class VideoService {
 	@Autowired
 	private CategoryService categoryService;
 	
+	public List<Video> findByCategoryId(Long categoryId) throws BusinessLogicException {
+		try {
+			Category category = categoryService.findOne(categoryId);
+			return repository.findByCategoryId(category.getId());
+			
+		} catch (ModelNotFoundException e) {
+			throw new BusinessLogicException("Category not found");
+		}
+	}
+	
 	public Video create(CreateOrUpdateVideoDto videoDto) throws BusinessLogicException {
 		if(videoDto.getCategoryId() == null) {
 			videoDto.setCategoryId(UNKNOW_CATEGORY);
@@ -38,24 +49,34 @@ public class VideoService {
 			return repository.save(video);
 			
 		} catch (ModelNotFoundException e) {
-			throw new BusinessLogicException("Invalid category provided");
+			throw new BusinessLogicException("Category not found");
 		}
 	}
 	
 	@Transactional
-	public VideoDto update(Long id, CreateOrUpdateVideoDto videoForm){
+	public VideoDto update(Long id, CreateOrUpdateVideoDto videoForm) throws BusinessLogicException, ModelNotFoundException{
+		if(videoForm.getCategoryId() == null) {
+			videoForm.setCategoryId(UNKNOW_CATEGORY);
+		}
+		
 		Optional<Video> optionalVideo = repository.findById(id);
 		
-		if(optionalVideo.isPresent()) {
+		if (!optionalVideo.isPresent()) {
+			throw new ModelNotFoundException("video not found");
+		}
+		
+		try {
+			Category category = categoryService.findOne(videoForm.getCategoryId());
 			Video video = optionalVideo.get();
 			video.setTitle(videoForm.getTitle());
 			video.setDescription(videoForm.getDescription());
 			video.setUrl(videoForm.getUrl());
-			
+			video.setCategory(category);
 			return new VideoDto(video);
+			
+		} catch (ModelNotFoundException e) {
+			throw new BusinessLogicException(e.getMessage());
 		}
-		
-		return null;
 	}
 	
 	@Transactional

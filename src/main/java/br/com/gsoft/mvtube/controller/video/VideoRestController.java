@@ -1,12 +1,15 @@
 package br.com.gsoft.mvtube.controller.video;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -37,9 +41,17 @@ public class VideoRestController {
 	private VideoService service;
 	
 	@GetMapping
-	public List<VideoDto> findAll() {
-		List<Video> videos = repository.findAll();
-		return VideoDto.converter(videos);
+	public Page<VideoDto> findAll(@RequestParam(required = false) String title, 
+			@PageableDefault(size = 5, sort = "title", direction = Direction.ASC) Pageable pagination) {
+		
+		if(title == null) {
+			Page<Video> videos = repository.findAll(pagination);
+			return VideoDto.converter(videos);
+		} else {		
+			Page<Video> videos = service.findByTitle(title, pagination);
+			return VideoDto.converter(videos);
+		}
+		
 	}
 	
 	@PostMapping

@@ -1,9 +1,10 @@
 package br.com.gsoft.mvtube.service.video;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,10 +28,10 @@ public class VideoService {
 	@Autowired
 	private CategoryService categoryService;
 	
-	public List<Video> findByCategoryId(Long categoryId) throws BusinessLogicException {
+	public Page<Video> findByCategoryId(Long categoryId, Pageable pagination) throws BusinessLogicException {
 		try {
 			Category category = categoryService.findOne(categoryId);
-			return repository.findByCategoryId(category.getId());
+			return repository.findByCategoryId(category.getId(), pagination);
 			
 		} catch (ModelNotFoundException e) {
 			throw new BusinessLogicException("Category not found");
@@ -86,6 +87,9 @@ public class VideoService {
 		if(optionalVideo.isPresent()) {
 			repository.delete(optionalVideo.get());
 		}
-		
+	}
+	
+	public Page<Video> findByTitle(String title, Pageable pagination) {
+		return repository.findByTitleContainsIgnoreCase(title, pagination);
 	}
 }

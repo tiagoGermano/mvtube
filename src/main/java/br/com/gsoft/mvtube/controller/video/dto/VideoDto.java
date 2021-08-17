@@ -1,7 +1,6 @@
 package br.com.gsoft.mvtube.controller.video.dto;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
 
 import br.com.gsoft.mvtube.model.video.Video;
 
@@ -42,8 +41,8 @@ public class VideoDto {
 		return categoryId;
 	}
 	
-	public static List<VideoDto> converter(List<Video> videos) {
-		return videos.stream().map(VideoDto::new).collect(Collectors.toList());
+	public static Page<VideoDto> converter(Page<Video> videos) {
+		return videos.map(VideoDto::new);
 	}
 
 }

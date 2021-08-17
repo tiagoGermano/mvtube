@@ -1,7 +1,6 @@
 package br.com.gsoft.mvtube.controller.category.dto;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
 
 import br.com.gsoft.mvtube.model.category.Category;
 
@@ -32,7 +31,7 @@ public class CategoryDto {
 		return color;
 	}
 
-	public static List<CategoryDto> converter(List<Category> categories){
-		return categories.stream().map(CategoryDto::new).collect(Collectors.toList());
+	public static Page<CategoryDto> converter(Page<Category> categories){
+		return categories.map(CategoryDto::new);
 	}
 }

@@ -1,11 +1,14 @@
 package br.com.gsoft.mvtube.controller.category;
 
 import java.net.URI;
-import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,8 +41,8 @@ public class CategoryRestController {
 	private VideoService videoService;
 	
 	@GetMapping
-	public ResponseEntity<List<CategoryDto>> findAll() {
-		List<Category> categories = service.findAll();
+	public ResponseEntity<Page<CategoryDto>> findAll(@PageableDefault(size = 10, sort = "title", direction = Direction.ASC) Pageable pagination) {
+		Page<Category> categories = service.findAll(pagination);
 		return ResponseEntity.ok(CategoryDto.converter(categories));
 	}
 	
@@ -84,9 +87,10 @@ public class CategoryRestController {
 	}
 	
 	@GetMapping("/{id}/videos")
-	public ResponseEntity<List<VideoDto>> findVideosByCategory(@PathVariable(name = "id") Long categoryId) throws BusinessLogicException {
-		List<Video> videos = videoService.findByCategoryId(categoryId);
+	public ResponseEntity<Page<VideoDto>> findVideosByCategory(@PathVariable(name = "id") Long categoryId,
+			@PageableDefault(size = 5, sort = "title", direction = Direction.ASC) Pageable pagination) throws BusinessLogicException {
+		Page<Video> videos = videoService.findByCategoryId(categoryId, pagination);
 		return ResponseEntity.ok(VideoDto.converter(videos));
 	}
-
+ 
 }

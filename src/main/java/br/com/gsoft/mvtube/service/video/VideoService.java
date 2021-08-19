@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -91,5 +92,10 @@ public class VideoService {
 	
 	public Page<Video> findByTitle(String title, Pageable pagination) {
 		return repository.findByTitleContainsIgnoreCase(title, pagination);
+	}
+	
+	public Page<Video> findFreeVideos(){
+		PageRequest pageRequest = PageRequest.of(0, 2);		
+		return repository.findAll(pageRequest);
 	}
 }

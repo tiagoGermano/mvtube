@@ -51,7 +51,6 @@ public class VideoRestController {
 			Page<Video> videos = service.findByTitle(title, pagination);
 			return VideoDto.converter(videos);
 		}
-		
 	}
 	
 	@PostMapping
@@ -101,5 +100,15 @@ public class VideoRestController {
 		
 		return ResponseEntity.notFound().build();			
 	}
-	
+
+	@GetMapping("/free")
+	public Page<VideoDto> freeVideos() throws BusinessLogicException {
+		Page<Video> freeVideos = service.findFreeVideos();
+		
+		if (!freeVideos.isEmpty()) {
+			return VideoDto.converter(freeVideos);
+		}
+		
+		throw new BusinessLogicException("No free video available =("); 
+	}	
 }

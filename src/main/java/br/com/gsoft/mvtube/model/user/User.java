@@ -23,7 +23,7 @@ public class User implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String userName;
+	private String username;
 
 	private String name;
 
@@ -46,11 +46,11 @@ public class User implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return userName;
+		return username;
 	}
 	
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getName() {
@@ -61,6 +61,7 @@ public class User implements UserDetails {
 		this.name = name;
 	}
 
+	@Override
 	public String getPassword() {
 		return password;
 	}
@@ -105,5 +106,6 @@ public class User implements UserDetails {
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
+
 
 }

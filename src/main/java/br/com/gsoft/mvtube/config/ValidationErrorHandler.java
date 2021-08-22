@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import br.com.gsoft.mvtube.exceptions.AuthenticationErrorException;
 import br.com.gsoft.mvtube.exceptions.BusinessLogicException;
 
 @RestControllerAdvice
@@ -40,4 +41,11 @@ public class ValidationErrorHandler {
     public GenericErrorDto handler2(BusinessLogicException exception) {
     	return new GenericErrorDto(exception.getMessage()); 
     }
+    
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AuthenticationErrorException.class)
+    public GenericErrorDto handlerAuthenticationError(AuthenticationErrorException exception) {
+    	return new GenericErrorDto(exception.getMessage()); 
+    }
+    
 }

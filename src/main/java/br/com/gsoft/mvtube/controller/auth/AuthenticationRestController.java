@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.gsoft.mvtube.config.security.TokenService;
 import br.com.gsoft.mvtube.controller.auth.dto.LoginDto;
 import br.com.gsoft.mvtube.controller.auth.dto.TokenBearedDto;
+import br.com.gsoft.mvtube.exceptions.AuthenticationErrorException;
 
 @RestController
 @RequestMapping("/auth")
@@ -28,7 +29,7 @@ public class AuthenticationRestController {
 	private TokenService tokenService;
 	
 	@PostMapping
-	public ResponseEntity<TokenBearedDto> authentication(@RequestBody @Valid LoginDto loginDto){
+	public ResponseEntity<TokenBearedDto> authentication(@RequestBody @Valid LoginDto loginDto) throws AuthenticationErrorException{
 		
 		UsernamePasswordAuthenticationToken authenticationToken = loginDto.converter();
 		try {
@@ -37,7 +38,7 @@ public class AuthenticationRestController {
 			return ResponseEntity.ok(new TokenBearedDto(token));
 			
 		} catch (AuthenticationException e) {
-			return ResponseEntity.badRequest().build();
+			throw new AuthenticationErrorException("Invalid username and password");
 		}
 
 	}

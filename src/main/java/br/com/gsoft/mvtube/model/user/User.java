@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +34,7 @@ public class User implements UserDetails {
 	@NotNull
 	private boolean enable;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<UserProfile> profiles = new ArrayList<>();
 
 	public Long getId() {

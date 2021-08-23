@@ -14,7 +14,7 @@
 	<name>mvtube</name>
 	<description>Plataforma de criação de playlists de vídeos</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

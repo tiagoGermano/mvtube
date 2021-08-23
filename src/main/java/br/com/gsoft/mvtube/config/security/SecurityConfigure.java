@@ -47,8 +47,7 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET, "/videos/free").permitAll()
 		.anyRequest().authenticated()
 		.and().csrf().disable()
-		.sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().addFilterBefore(new TokenAuthenticationFilter(tokenService, userRepository), UsernamePasswordAuthenticationFilter.class);
 	}
 	

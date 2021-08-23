@@ -29,15 +29,12 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-
 		String token = getToken(request);
-		if(!tokenService.validateToken(token)) {
-	        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		} else {
-			authenticationClient(token);			
-			filterChain.doFilter(request, response);
+		if(tokenService.validateToken(token)) {
+			authenticationClient(token);
 		}
 		
+		filterChain.doFilter(request, response);
 	}
 
 	private void authenticationClient(String token) {

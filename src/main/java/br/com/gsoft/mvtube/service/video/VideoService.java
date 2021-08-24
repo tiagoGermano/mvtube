@@ -29,10 +29,7 @@ public class VideoService {
 	
 	@Autowired
 	private CategoryService categoryService;
-	
-	@Value("${mvtube.test}")
-	private String test;
-	
+		
 	public Page<Video> findByCategoryId(Long categoryId, Pageable pagination) throws BusinessLogicException {
 		try {
 			Category category = categoryService.findOne(categoryId);
@@ -99,7 +96,6 @@ public class VideoService {
 	}
 	
 	public Page<Video> findFreeVideos(){
-		System.out.println(test);
 		PageRequest pageRequest = PageRequest.of(0, 2);		
 		return repository.findAll(pageRequest);
 	}

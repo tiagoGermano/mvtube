@@ -31,7 +31,7 @@ import br.com.gsoft.mvtube.service.category.CategoryService;
 import br.com.gsoft.mvtube.service.video.VideoService;
 
 @RestController
-@RequestMapping("/categorias")
+@RequestMapping("/api/categorias")
 public class CategoryRestController {
 	
 	@Autowired

@@ -31,7 +31,7 @@ import br.com.gsoft.mvtube.repository.VideoRepository;
 import br.com.gsoft.mvtube.service.video.VideoService;
 
 @RestController
-@RequestMapping("videos")
+@RequestMapping("/api/videos")
 public class VideoRestController {
 
 	@Autowired

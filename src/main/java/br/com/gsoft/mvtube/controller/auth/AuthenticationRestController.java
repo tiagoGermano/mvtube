@@ -19,7 +19,7 @@ import br.com.gsoft.mvtube.controller.auth.dto.TokenBearedDto;
 import br.com.gsoft.mvtube.exceptions.AuthenticationErrorException;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthenticationRestController {
 
 	@Autowired
